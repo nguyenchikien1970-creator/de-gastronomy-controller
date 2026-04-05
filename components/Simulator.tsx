@@ -61,12 +61,12 @@ const Simulator: React.FC<Props> = ({ baseData }) => {
     return `${sign}${diff.toLocaleString('de-DE', { maximumFractionDigits: 0 })} €`;
   };
 
-  const ebitdaStatus = getBenchmarkStatus(kpis.operating_result_1_margin, 'ebitda');
+  const profitStatus = kpis.net_profit >= 0 ? 'green' : 'red';
   const statusColor = {
     green: 'bg-green-400/10 text-green-400 border-green-400/20',
     yellow: 'bg-yellow-400/10 text-yellow-400 border-yellow-400/20',
     red: 'bg-red-400/10 text-red-400 border-red-400/20',
-  }[ebitdaStatus];
+  }[profitStatus];
 
   return (
     <div className="bg-[#11131b] rounded-xl shadow-sm border border-gray-800 p-6 w-full">
@@ -117,10 +117,10 @@ const Simulator: React.FC<Props> = ({ baseData }) => {
                 </div>
 
                  <div className={`flex justify-between items-center p-4 rounded-lg border ${statusColor} mt-4`}>
-                    <span className="font-semibold">BE 1 (EBITDA)</span>
+                    <span className="font-semibold">Lợi nhuận</span>
                     <div className="text-right">
-                        <div className="font-bold text-2xl">{kpis.operating_result_1.toLocaleString('de-DE')} €</div>
-                        <div className="text-sm opacity-80">{kpis.operating_result_1_margin.toFixed(1)}%</div>
+                        <div className="font-bold text-2xl">{kpis.net_profit.toLocaleString('de-DE')} €</div>
+                        <div className="text-sm opacity-80">{kpis.net_margin_pct.toFixed(1)}%</div>
                     </div>
                 </div>
             </div>
