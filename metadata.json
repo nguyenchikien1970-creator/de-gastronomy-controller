@@ -1,0 +1,5 @@
+{
+  "name": "V1-1-DE Gastronomy Controller / App Kiểm Soát nhà hàng Kiên MAMMAM Berlin",
+  "description": "A comprehensive dashboard for German restaurant controlling with local data storage, KPI calculation, what-if simulation, and Gemini-powered insights.",
+  "requestFramePermissions": []
+}
