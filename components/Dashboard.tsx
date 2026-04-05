@@ -91,10 +91,10 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
           icon={ShoppingBag}
         />
         <KPICard 
-          title="BE 1 (EBITDA)" 
-          value={`${kpis.operating_result_1_margin.toFixed(1)}%`} 
-          subValue={`${kpis.operating_result_1.toLocaleString('de-DE')} €`}
-          status={getBenchmarkStatus(kpis.operating_result_1_margin, 'ebitda')}
+          title="Lợi nhuận" 
+          value={`${kpis.net_margin_pct.toFixed(1)}%`} 
+          subValue={`${kpis.net_profit.toLocaleString('de-DE')} €`}
+          status={kpis.net_profit >= 0 ? 'green' : 'red'}
           icon={TrendingUp}
         />
       </div>
@@ -149,8 +149,8 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
                 <th className="px-4 py-3 text-right">Doanh thu</th>
                 <th className="px-4 py-3 text-right">Giá vốn</th>
                 <th className="px-4 py-3 text-right">Nhân sự</th>
-                <th className="px-4 py-3 text-right">BE 1 (EBITDA)</th>
                 <th className="px-4 py-3 text-right">Lợi nhuận</th>
+                <th className="px-4 py-3 text-right">BE 1 (EBITDA)</th>
                 <th className="px-4 py-3 text-center">Sửa</th>
               </tr>
             </thead>
@@ -167,10 +167,10 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
                     <td className="px-4 py-3 text-right text-red-400">
                       {d.expense_personnel.toLocaleString('de-DE')} € <span className="text-xs opacity-60">({k.personnel_cost_pct.toFixed(0)}%)</span>
                     </td>
-                    <td className={`px-4 py-3 text-right font-bold ${k.operating_result_1 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {k.operating_result_1.toLocaleString('de-DE')} €
+                    <td className={`px-4 py-3 text-right font-bold ${k.net_profit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {k.net_profit.toLocaleString('de-DE')} €
                     </td>
-                    <td className="px-4 py-3 text-right text-gray-400">{k.net_profit.toLocaleString('de-DE')} €</td>
+                    <td className="px-4 py-3 text-right text-gray-400">{k.operating_result_1.toLocaleString('de-DE')} €</td>
                     <td className="px-4 py-3 text-center">
                       <button onClick={() => onEdit(d.id)} className="text-blue-400 hover:text-blue-300 p-1">
                         <Edit2 size={16} />
