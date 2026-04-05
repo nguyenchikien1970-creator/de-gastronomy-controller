@@ -48,6 +48,13 @@ const App: React.FC = () => {
     setRestaurantProfile(profile);
   };
 
+  useEffect(() => {
+    const stored = loadAllData();
+    if (stored.length > 0) {
+      setData(stored);
+    }
+  }, []);
+
   // Show login page if not authenticated
   if (!isAuthenticated) {
     return <LoginPage onLogin={handleLogin} />;
@@ -58,12 +65,6 @@ const App: React.FC = () => {
     return <RestaurantSetup onComplete={handleSetupComplete} />;
   }
 
-  useEffect(() => {
-    const stored = loadAllData();
-    if (stored.length > 0) {
-      setData(stored);
-    }
-  }, []);
 
   const handleSaveMonth = (monthData: MonthlyData) => {
     let newData;
