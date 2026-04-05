@@ -108,15 +108,17 @@ export const calculateKPIs = (data: MonthlyData): ComputedKPIs => {
 };
 
 export const calculateBreakEven = (data: MonthlyData, kpis: ComputedKPIs) => {
-  // Break-Even EBITDA (Result 1 = 0)
-  // Formula: Revenue = FixedCosts / CM_Ratio
-  // Assumptions:
-  // 1. Gross Profit ~ Contribution Margin (COGS is variable)
-  // 2. Group 3 Operating Costs ~ Fixed Costs (Personnel, Energy, Admin, etc.)
+  // Break-Even Lợi nhuận (Net Profit = 0)
+  // Formula: Revenue = TotalFixedCosts / CM_Ratio
+  // 
+  // Cách tính:
+  // 1. Chi phí biến đổi = COGS (tỷ lệ thuận với doanh thu)
+  // 2. Tỷ lệ biên lợi nhuận gộp (CM Ratio) = Gross Profit / Revenue
+  // 3. Tổng chi phí cố định = Operating + Asset + Taxes + VAT Payable
+  // 4. Điểm hòa vốn = Tổng chi phí cố định / CM Ratio
   
   const revenue = kpis.total_revenue;
   const gross_profit = kpis.gross_profit;
-  const operating_costs = kpis.total_operating_costs; // Group 3 (Fixed for EBITDA calc)
 
   if (revenue <= 0 || gross_profit <= 0) {
       return { ebitda_eur: 0 };
@@ -127,10 +129,21 @@ export const calculateBreakEven = (data: MonthlyData, kpis: ComputedKPIs) => {
   // Safety check for extremely low margin to prevent infinity
   if (cm_ratio < 0.01) return { ebitda_eur: 0 };
 
-  // BEP (EBITDA) calculation
-  const bep_ebitda = operating_costs / cm_ratio;
+  // Tổng TẤT CẢ chi phí (ngoài COGS):
+  // - Group 3: Chi phí vận hành (nhân sự, năng lượng, phí, hoạt động, hành chính)
+  // - Group 4: Chi phí tài sản (bảo trì, khấu hao, tiền thuê, leasing, lãi vay)
+  // - Group 5: Thuế thu nhập
+  // - VAT: Thuế GTGT phải trả (Zahllast)
+  const total_all_costs = 
+    kpis.total_operating_costs +   // Group 3
+    kpis.total_asset_costs +       // Group 4
+    (data.expense_taxes || 0) +    // Group 5
+    Math.max(0, kpis.vat_payable); // VAT Zahllast (chỉ tính nếu dương)
 
-  return { ebitda_eur: Math.round(bep_ebitda) };
+  // BEP (Net Profit = 0)
+  const bep_net_profit = total_all_costs / cm_ratio;
+
+  return { ebitda_eur: Math.round(bep_net_profit) };
 };
 
 export const getBenchmarkStatus = (
