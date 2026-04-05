@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { loadAllData, saveAllData } from './services/storageService';
-import { MonthlyData, AIAnalysisResult } from './types';
+import { MonthlyData, AIAnalysisResult, RestaurantProfile } from './types';
 import Dashboard from './components/Dashboard';
 import InputForm from './components/InputForm';
 import AIReport from './components/AIReport';
 import PnLTable from './components/PnLTable';
 import LoginPage from './components/LoginPage';
+import RestaurantSetup from './components/RestaurantSetup';
 import { LayoutDashboard, FileText, Download, ChefHat, ShieldAlert, Table2, Menu, X, LogOut } from 'lucide-react';
 import { calculateKPIs } from './services/calcService';
 
@@ -23,6 +24,10 @@ const App: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [aiResult, setAiResult] = useState<AIAnalysisResult | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [restaurantProfile, setRestaurantProfile] = useState<RestaurantProfile | null>(() => {
+    const saved = localStorage.getItem('restaurant_profile');
+    return saved ? JSON.parse(saved) : null;
+  });
 
   const handleLogin = (email: string) => {
     localStorage.setItem('auth_session', 'true');
@@ -38,9 +43,19 @@ const App: React.FC = () => {
     setUserEmail('');
   };
 
+  const handleSetupComplete = (profile: RestaurantProfile) => {
+    localStorage.setItem('restaurant_profile', JSON.stringify(profile));
+    setRestaurantProfile(profile);
+  };
+
   // Show login page if not authenticated
   if (!isAuthenticated) {
     return <LoginPage onLogin={handleLogin} />;
+  }
+
+  // Show restaurant setup if no profile
+  if (!restaurantProfile) {
+    return <RestaurantSetup onComplete={handleSetupComplete} />;
   }
 
   useEffect(() => {
@@ -492,6 +507,7 @@ const App: React.FC = () => {
                                     data={activeMonthData} 
                                     result={aiResult}
                                     onResult={setAiResult}
+                                    profile={restaurantProfile}
                                 />
                             ) : (
                                 <div className="text-center py-20 text-gray-500 border border-gray-800 rounded-xl bg-[#11131b]">

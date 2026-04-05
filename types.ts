@@ -1,3 +1,13 @@
+export interface RestaurantProfile {
+  city: string;           // Thành phố tại Đức
+  district: string;       // Quận
+  cuisineType: string;    // Chủng loại ẩm thực
+  areaM2: number;         // Diện tích (m²)
+  seatsIndoor: number;    // Số ghế trong nhà
+  seatsOutdoor: number;   // Số ghế ngoài trời
+  restaurantClass: 'budget' | 'mid' | 'premium'; // Đẳng cấp
+}
+
 export interface MonthlyData {
   id: string;
   month: string; // YYYY-MM

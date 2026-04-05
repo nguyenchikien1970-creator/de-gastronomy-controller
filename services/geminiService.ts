@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { MonthlyData, ComputedKPIs, AIAnalysisResult } from '../types';
+import { MonthlyData, ComputedKPIs, AIAnalysisResult, RestaurantProfile } from '../types';
 import { AI_SYSTEM_INSTRUCTION } from '../constants';
 import { calculateBreakEven } from './calcService';
 
@@ -8,11 +8,20 @@ const MODEL_NAME = 'gemini-3-flash-preview';
 /**
  * Chuẩn bị payload gửi cho Gemini
  */
-const buildPayload = (monthData: MonthlyData, kpis: ComputedKPIs, breakEvenEUR: number) => {
+const buildPayload = (monthData: MonthlyData, kpis: ComputedKPIs, breakEvenEUR: number, profile?: RestaurantProfile | null) => {
   return {
     mode: "analysis",
     response_language: "vi",
     country: "DE",
+    restaurant_profile: profile ? {
+      city: profile.city,
+      district: profile.district,
+      cuisine_type: profile.cuisineType,
+      area_m2: profile.areaM2,
+      seats_indoor: profile.seatsIndoor,
+      seats_outdoor: profile.seatsOutdoor,
+      restaurant_class: profile.restaurantClass === 'budget' ? 'Bình dân' : profile.restaurantClass === 'mid' ? 'Trung cấp' : 'Cao cấp',
+    } : undefined,
     revenue_period: {
       period: "monthly",
       total_revenue_eur: kpis.total_revenue,
@@ -83,11 +92,12 @@ const analyzeWithAPIRoute = async (payload: any): Promise<AIAnalysisResult | nul
  */
 export const analyzeRestaurantData = async (
   monthData: MonthlyData,
-  kpis: ComputedKPIs
+  kpis: ComputedKPIs,
+  profile?: RestaurantProfile | null
 ): Promise<AIAnalysisResult | null> => {
   // Tính break-even chính xác ở client (không để AI hallucinate)
   const breakEvenCalc = calculateBreakEven(monthData, kpis);
-  const payload = buildPayload(monthData, kpis, breakEvenCalc.ebitda_eur);
+  const payload = buildPayload(monthData, kpis, breakEvenCalc.ebitda_eur, profile);
 
   let result: AIAnalysisResult | null;
 

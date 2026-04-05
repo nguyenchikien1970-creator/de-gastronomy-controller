@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MonthlyData } from '../types';
+import { MonthlyData, RestaurantProfile } from '../types';
 import { calculateKPIs } from '../services/calcService';
 import { analyzeRestaurantData } from '../services/geminiService';
 import { AIAnalysisResult } from '../types';
@@ -9,9 +9,10 @@ interface Props {
   data: MonthlyData;
   result: AIAnalysisResult | null;
   onResult: (result: AIAnalysisResult) => void;
+  profile?: RestaurantProfile | null;
 }
 
-const AIReport: React.FC<Props> = ({ data, result, onResult }) => {
+const AIReport: React.FC<Props> = ({ data, result, onResult, profile }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +31,7 @@ const AIReport: React.FC<Props> = ({ data, result, onResult }) => {
         }
 
       const kpis = calculateKPIs(data);
-      const analysis = await analyzeRestaurantData(data, kpis);
+      const analysis = await analyzeRestaurantData(data, kpis, profile);
       if (analysis) {
         onResult(analysis);
       }
