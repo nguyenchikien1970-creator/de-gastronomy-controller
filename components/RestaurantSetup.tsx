@@ -143,7 +143,7 @@ const RestaurantSetup: React.FC<Props> = ({ onComplete, existingProfile }) => {
             <h3 className="text-sm font-bold text-blue-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <ChefHat size={16} /> Chủng loại ẩm thực
             </h3>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {CUISINE_TYPES.map(cuisine => (
                 <button
                   key={cuisine}

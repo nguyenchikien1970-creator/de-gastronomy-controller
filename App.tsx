@@ -478,7 +478,7 @@ const App: React.FC = () => {
             </div>
          </div>
 
-         <div className="flex-1 overflow-auto p-4 md:p-8 custom-scrollbar">
+         <div className="flex-1 overflow-auto p-4 md:p-8 pb-24 md:pb-8 custom-scrollbar">
             <div className="max-w-7xl mx-auto h-full flex flex-col">
                 <div className="flex-1">
                     {currentTab === 'dashboard' && (
@@ -521,6 +521,48 @@ const App: React.FC = () => {
             </div>
          </div>
       </main>
+
+      {/* Mobile Bottom Tab Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f1117]/95 backdrop-blur-md border-t border-gray-800 z-50 safe-area-bottom">
+        <div className="flex justify-around items-center h-16">
+          <button
+            onClick={() => handleTabChange('input')}
+            className={`flex flex-col items-center justify-center gap-1 flex-1 py-2 transition-colors ${
+              currentTab === 'input' ? 'text-blue-400' : 'text-gray-500'
+            }`}
+          >
+            <FileText size={20} />
+            <span className="text-[10px] font-medium">Nhập liệu</span>
+          </button>
+          <button
+            onClick={() => handleTabChange('pnl')}
+            className={`flex flex-col items-center justify-center gap-1 flex-1 py-2 transition-colors ${
+              currentTab === 'pnl' ? 'text-blue-400' : 'text-gray-500'
+            }`}
+          >
+            <Table2 size={20} />
+            <span className="text-[10px] font-medium">Bảng tính</span>
+          </button>
+          <button
+            onClick={() => handleTabChange('dashboard')}
+            className={`flex flex-col items-center justify-center gap-1 flex-1 py-2 transition-colors ${
+              currentTab === 'dashboard' ? 'text-blue-400' : 'text-gray-500'
+            }`}
+          >
+            <LayoutDashboard size={20} />
+            <span className="text-[10px] font-medium">Tổng quan</span>
+          </button>
+          <button
+            onClick={() => handleTabChange('ai')}
+            className={`flex flex-col items-center justify-center gap-1 flex-1 py-2 transition-colors ${
+              currentTab === 'ai' ? 'text-purple-400' : 'text-gray-500'
+            }`}
+          >
+            <ChefHat size={20} />
+            <span className="text-[10px] font-medium">AI Tư vấn</span>
+          </button>
+        </div>
+      </nav>
     </div>
   );
 };
