@@ -35,7 +35,7 @@ const AIReport: React.FC<Props> = ({ data, result, onResult }) => {
         onResult(analysis);
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to generate insights');
+      setError(err.message || 'Không thể tạo phân tích');
     } finally {
       setLoading(false);
     }
@@ -159,7 +159,7 @@ const AIReport: React.FC<Props> = ({ data, result, onResult }) => {
 
                 <div className="flex flex-col gap-6">
                      <div className="bg-blue-500/10 rounded-xl p-5 border border-blue-500/20 flex-1">
-                        <h4 className="font-bold text-blue-400 mb-3">Điểm hòa vốn (Break-Even)</h4>
+                        <h4 className="font-bold text-blue-400 mb-3">Điểm hòa vốn</h4>
                         <p className="text-sm text-blue-300 mb-2">Doanh thu cần đạt để Lợi nhuận = 0:</p>
                         <div className="text-3xl font-bold text-blue-100">
                             {result.break_even.break_even_revenue.ebitda_eur.toLocaleString('de-DE')} €

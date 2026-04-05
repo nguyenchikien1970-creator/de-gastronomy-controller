@@ -298,7 +298,7 @@ const App: React.FC = () => {
     });
 
     htmlContent += `
-      <h2>4. Điểm hòa vốn (Break-Even)</h2>
+      <h2>4. Điểm hòa vốn</h2>
       <p>Doanh thu cần đạt để Lợi nhuận = 0: <b style="font-size: 14pt; color: #1e40af">${aiResult.break_even.break_even_revenue.ebitda_eur.toLocaleString('de-DE')} €</b></p>
       
       <div class="footer">App by Kiên MAMMAM Berlin</div>

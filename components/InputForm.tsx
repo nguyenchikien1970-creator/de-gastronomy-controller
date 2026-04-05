@@ -368,7 +368,7 @@ const InputForm: React.FC<Props> = ({ dataList, selectedId, onSelect, onSave, on
                     <InputField label="Bảo trì" subLabel="Instandh." value={formData.expense_maintenance} onChange={(v:number) => handleChange('expense_maintenance', v)} />
                     <InputField label="Khấu hao" subLabel="AfA" value={formData.expense_depreciation} onChange={(v:number) => handleChange('expense_depreciation', v)} />
                     <InputField label="Tiền thuê" subLabel="Mieten" value={formData.expense_rent} onChange={(v:number) => handleChange('expense_rent', v)} />
-                    <InputField label="Leasing" subLabel="Leasing" value={formData.expense_leasing} onChange={(v:number) => handleChange('expense_leasing', v)} />
+                    <InputField label="Cho thuê TC" subLabel="Leasing" value={formData.expense_leasing} onChange={(v:number) => handleChange('expense_leasing', v)} />
                     <InputField label="Lãi vay" subLabel="Zinsen" value={formData.expense_interest} onChange={(v:number) => handleChange('expense_interest', v)} />
                 </div>
 

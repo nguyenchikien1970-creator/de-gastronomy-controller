@@ -72,15 +72,15 @@ const Simulator: React.FC<Props> = ({ baseData }) => {
     <div className="bg-[#11131b] rounded-xl shadow-sm border border-gray-800 p-6 w-full">
       <div className="flex items-center gap-2 mb-6 border-b border-gray-800 pb-4">
         <RefreshCw size={20} className="text-blue-500" />
-        <h2 className="text-lg font-bold text-gray-100">What-If Simulator</h2>
+        <h2 className="text-lg font-bold text-gray-100">Mô phỏng Giả Định</h2>
         <span className="text-xs text-gray-500 ml-2 font-normal">(Điều chỉnh để xem tác động lợi nhuận)</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div className="space-y-4">
-          <Slider label="Sales Volume (Khối lượng bán)" value={salesMult} onChange={setSalesMult} min={50} max={150} />
-          <Slider label="COGS Efficiency (Hiệu quả giá vốn)" value={cogsMult} onChange={setCogsMult} min={80} max={120} />
-          <Slider label="Labor Cost (Chi phí nhân sự)" value={laborMult} onChange={setLaborMult} min={80} max={120} />
+          <Slider label="Khối lượng bán" value={salesMult} onChange={setSalesMult} min={50} max={150} />
+          <Slider label="Hiệu quả giá vốn" value={cogsMult} onChange={setCogsMult} min={80} max={120} />
+          <Slider label="Chi phí nhân sự" value={laborMult} onChange={setLaborMult} min={80} max={120} />
           
           <button 
             onClick={() => {
@@ -88,16 +88,16 @@ const Simulator: React.FC<Props> = ({ baseData }) => {
             }}
             className="text-xs text-blue-400 hover:text-blue-300 font-medium underline mt-2"
           >
-            Reset to Actuals
+            Đặt lại gốc
           </button>
         </div>
 
         <div className="bg-[#161922] rounded-xl p-6 flex flex-col justify-center border border-gray-800">
-            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-4 tracking-wider">Simulated Impact</h3>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-4 tracking-wider">Kết quả mô phỏng</h3>
             
             <div className="space-y-6">
                 <div className="flex justify-between items-end border-b border-gray-800 pb-2">
-                    <span className="text-gray-400">Total Revenue</span>
+                    <span className="text-gray-400">Tổng doanh thu</span>
                     <div className="text-right">
                         <div className="font-bold text-gray-100 text-lg">{kpis.total_revenue.toLocaleString('de-DE')} €</div>
                         <div className={`text-xs ${kpis.total_revenue >= baseKpis.total_revenue ? 'text-green-500' : 'text-red-500'}`}>
@@ -107,7 +107,7 @@ const Simulator: React.FC<Props> = ({ baseData }) => {
                 </div>
 
                 <div className="flex justify-between items-end border-b border-gray-800 pb-2">
-                    <span className="text-gray-400">Prime Cost %</span>
+                    <span className="text-gray-400">Chi phí chính %</span>
                     <div className="text-right">
                         <div className="font-bold text-gray-100 text-lg">{kpis.prime_cost_pct.toFixed(1)}%</div>
                          <div className={`text-xs ${kpis.prime_cost_pct <= baseKpis.prime_cost_pct ? 'text-green-500' : 'text-red-500'}`}>

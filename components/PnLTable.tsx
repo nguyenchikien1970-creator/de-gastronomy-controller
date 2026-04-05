@@ -86,7 +86,7 @@ const PnLTable: React.FC<Props> = ({ data, selectedMonthId }) => {
 
                     {/* Gross Profit */}
                     <div className="py-3 px-4 bg-[#1c212e] border-y border-gray-700 flex justify-between items-center mt-2 mb-2">
-                        <span className="font-bold text-lg text-white">Lợi nhuận gộp (Rohertrag)</span>
+                        <span className="font-bold text-lg text-white">Lợi nhuận gộp</span>
                         <div className="text-right">
                             <span className="font-bold text-xl text-green-400 block">{k.gross_profit.toLocaleString('de-DE')} €</span>
                             <span className="text-xs text-gray-400">{k.gross_margin_pct.toFixed(1)}%</span>
@@ -104,7 +104,7 @@ const PnLTable: React.FC<Props> = ({ data, selectedMonthId }) => {
 
                     {/* Result 1 */}
                     <div className="py-2 px-4 bg-[#1c212e]/30 border-y border-gray-800 flex justify-between items-center">
-                        <span className="font-bold text-gray-200">Kết quả vận hành (Betriebsergebnis 1)</span>
+                        <span className="font-bold text-gray-200">Kết quả vận hành 1</span>
                         <div className="text-right">
                             <span className={`font-bold block ${k.operating_result_1 >= 0 ? 'text-blue-400' : 'text-red-400'}`}>{k.operating_result_1.toLocaleString('de-DE')} €</span>
                             <span className="text-xs text-gray-500">{k.operating_result_1_margin.toFixed(1)}%</span>
@@ -116,13 +116,13 @@ const PnLTable: React.FC<Props> = ({ data, selectedMonthId }) => {
                     <Row label="Bảo trì" deLabel="Instandhaltung" value={activeData.expense_maintenance} pct={pct(activeData.expense_maintenance)} />
                     <Row label="Khấu hao" deLabel="AfA" value={activeData.expense_depreciation} pct={pct(activeData.expense_depreciation)} />
                     <Row label="Tiền thuê" deLabel="Mieten & Pachten" value={activeData.expense_rent} pct={pct(activeData.expense_rent)} />
-                    <Row label="Leasing" deLabel="Leasing" value={activeData.expense_leasing} pct={pct(activeData.expense_leasing)} />
+                    <Row label="Cho thuê tài chính" deLabel="Leasing" value={activeData.expense_leasing} pct={pct(activeData.expense_leasing)} />
                     <Row label="Lãi vay" deLabel="Zinsen" value={activeData.expense_interest} pct={pct(activeData.expense_interest)} />
                     <Row label="Tổng CP Tài sản" deLabel="Gesamt" value={k.total_asset_costs} pct={pct(k.total_asset_costs)} isTotal />
 
                     {/* Result 2 */}
                     <div className="py-2 px-4 bg-[#1c212e]/30 border-y border-gray-800 flex justify-between items-center">
-                        <span className="font-bold text-gray-200">Lợi nhuận trước thuế (Betriebsergebnis 2)</span>
+                        <span className="font-bold text-gray-200">Lợi nhuận trước thuế</span>
                         <div className="text-right">
                             <span className={`font-bold block ${k.operating_result_2 >= 0 ? 'text-blue-400' : 'text-red-400'}`}>{k.operating_result_2.toLocaleString('de-DE')} €</span>
                             <span className="text-xs text-gray-500">{k.operating_result_2_margin.toFixed(1)}%</span>
@@ -176,7 +176,7 @@ const PnLTable: React.FC<Props> = ({ data, selectedMonthId }) => {
                     {/* Net Profit (Bottom Line) */}
                     <div className="py-6 px-4 bg-gradient-to-r from-[#1c212e] to-[#252a3b] border-t-2 border-blue-500/50 flex justify-between items-center mt-2">
                         <div>
-                            <span className="font-bold text-xl text-white block">Lợi nhuận sau thuế (Gewinn)</span>
+                            <span className="font-bold text-xl text-white block">Lợi nhuận sau thuế</span>
                             <span className="text-xs text-gray-400 font-normal">
                                 = (Kết quả 2 - Thuế TNDN - Thuế phải trả)
                             </span>

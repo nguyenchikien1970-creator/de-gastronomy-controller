@@ -41,11 +41,10 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
     const kpis = calculateKPIs(d);
     return {
       month: d.month,
-      Revenue: kpis.total_revenue,
-      COGS: kpis.total_cogs,
-      Labor: d.expense_personnel,
-      EBITDA: kpis.operating_result_1, // Using BE1 as EBITDA proxy
-      PrimeCostPct: kpis.prime_cost_pct
+      'Doanh thu': kpis.total_revenue,
+      'Giá vốn': kpis.total_cogs,
+      'Nhân sự': d.expense_personnel,
+      'Lợi nhuận': kpis.net_profit,
     };
   });
 
@@ -78,14 +77,14 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
           icon={Wallet}
         />
         <KPICard 
-          title="Prime Cost" 
+          title="Chi phí chính" 
           value={`${kpis.prime_cost_pct.toFixed(1)}%`} 
           subValue={`${kpis.prime_cost.toLocaleString('de-DE')} €`}
           status={getBenchmarkStatus(kpis.prime_cost_pct, 'prime')}
           icon={Activity}
         />
         <KPICard 
-          title="Giá vốn (COGS)" 
+          title="Giá vốn" 
           value={`${((kpis.total_cogs / kpis.total_revenue) * 100).toFixed(1)}%`} 
           status={getBenchmarkStatus((kpis.total_cogs / kpis.total_revenue) * 100, 'cogs')}
           icon={ShoppingBag}
@@ -103,7 +102,7 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-[#11131b] p-5 rounded-xl border border-gray-800 shadow-sm h-80">
           <h3 className="text-sm font-bold text-gray-300 mb-4 flex items-center gap-2">
-            <TrendingUp size={16} className="text-blue-500" /> Doanh thu vs Prime Costs
+            <TrendingUp size={16} className="text-blue-500" /> Doanh thu so với Chi phí chính
           </h3>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
@@ -115,15 +114,15 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
                 formatter={(value: number) => value.toLocaleString('de-DE') + ' €'} 
               />
               <Legend />
-              <Bar dataKey="Revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="COGS" stackId="a" fill="#f97316" />
-              <Bar dataKey="Labor" stackId="a" fill="#ef4444" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Doanh thu" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Giá vốn" stackId="a" fill="#f97316" />
+              <Bar dataKey="Nhân sự" stackId="a" fill="#ef4444" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         <div className="bg-[#11131b] p-5 rounded-xl border border-gray-800 shadow-sm h-80">
-          <h3 className="text-sm font-bold text-gray-300 mb-4">EBITDA (BE1) Trend</h3>
+          <h3 className="text-sm font-bold text-gray-300 mb-4">Xu hướng Lợi nhuận</h3>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
@@ -133,7 +132,7 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#f1f5f9' }}
                 formatter={(value: number) => value.toLocaleString('de-DE') + ' €'} 
               />
-              <Line type="monotone" dataKey="EBITDA" stroke="#10b981" strokeWidth={3} dot={{r: 4, fill: '#10b981'}} activeDot={{r: 6}} />
+              <Line type="monotone" dataKey="Lợi nhuận" stroke="#10b981" strokeWidth={3} dot={{r: 4, fill: '#10b981'}} activeDot={{r: 6}} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -150,7 +149,7 @@ const Dashboard: React.FC<Props> = ({ data, onEdit }) => {
                 <th className="px-4 py-3 text-right">Giá vốn</th>
                 <th className="px-4 py-3 text-right">Nhân sự</th>
                 <th className="px-4 py-3 text-right">Lợi nhuận</th>
-                <th className="px-4 py-3 text-right">BE 1 (EBITDA)</th>
+                <th className="px-4 py-3 text-right">KQ vận hành</th>
                 <th className="px-4 py-3 text-center">Sửa</th>
               </tr>
             </thead>
